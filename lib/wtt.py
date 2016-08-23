@@ -24,8 +24,13 @@ class WhatTheTrend:
 
         return False, response.status_code
 
-    def get_trends(self):
-        trends_url = '{base}/trends.json'.format(base=BASE_API_URL)
+    def get_trends(self, around=None):
+        woeid = None
+        if around:
+            woeid = self.get_woeid_by_name(around)
+
+        trends_url = '{base}/trends.json?woeid={id}'.format(base=BASE_API_URL,
+                                                            id=woeid)
         ok, response = self._get_json(trends_url)
 
         if ok:
