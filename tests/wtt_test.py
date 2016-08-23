@@ -11,12 +11,20 @@ class WTTTestCase(unittest.TestCase):
         self.wtt = WhatTheTrend()
 
     @patch('requests.get')
-    def test_requests_get(self, request_mock):
+    def test_requests_get_json(self, request_mock):
         trends_url = '{base}/trends.json'.format(base=BASE_API_URL)
 
         self.wtt._get_json(trends_url)
 
         request_mock.assert_called_with(trends_url, params=None)
+
+    @patch('requests.get')
+    def test_requests_get_text(self, request_mock):
+        place_url = "{0}/places.q({1})".format(YAHOO_API_BASE_URI, "new york")
+
+        self.wtt._get_text(place_url)
+
+        request_mock.assert_called_with(place_url, params=None)
 
     @patch('lib.wtt.WhatTheTrend._get_json')
     def test_get_trends(self, mock_get):
