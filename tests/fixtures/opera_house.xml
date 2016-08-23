@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<places xmlns="http://where.yahooapis.com/v1/schema.rng"
+        xmlns:yahoo="http://www.yahooapis.com/v1/base.rng" yahoo:count="1"
+        yahoo:start="0" yahoo:total="1">
+    <place xml:lang="en-US"
+           yahoo:uri="http://where.yahooapis.com/v1/place/28717584">
+        <woeid>28717584</woeid>
+        <placetypename code="20">Point of Interest</placetypename>
+        <name>Sydney Opera House</name>
+        <country code="AU" type="Country" woeid="23424748">Australia</country>
+        <admin1 code="AU-NSW" type="State" woeid="2344700">New South Wales
+        </admin1>
+        <admin2></admin2>
+        <admin3></admin3>
+        <locality1 type="Town" woeid="1105779">Sydney</locality1>
+        <locality2></locality2>
+        <postal type="Postal Code" woeid="12706662">2000</postal>
+        <centroid>
+            <latitude>-33.857639</latitude>
+            <longitude>151.214706</longitude>
+        </centroid>
+        <boundingbox>
+            <southwest>
+                <latitude>-33.859119</latitude>
+                <longitude>151.213577</longitude>
+            </southwest>
+            <northeast>
+                <latitude>-33.856159</latitude>
+                <longitude>151.215836</longitude>
+            </northeast>
+        </boundingbox>
+        <arearank>0</arearank>
+        <poprank>0</poprank>
+        <timezone type="Time Zone" woeid="28350885">Australia/Sydney</timezone>
+    </place>
+</places>

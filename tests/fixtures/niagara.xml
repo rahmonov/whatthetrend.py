@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<places xmlns="http://where.yahooapis.com/v1/schema.rng"
+        xmlns:yahoo="http://www.yahooapis.com/v1/base.rng" yahoo:start="0"
+        yahoo:count="1" yahoo:total="4">
+    <place yahoo:uri="http://where.yahooapis.com/v1/place/28299078"
+           xml:lang="en-US">
+        <woeid>28299078</woeid>
+        <placeTypeName code="15">Drainage</placeTypeName>
+        <name>Niagara Falls</name>
+        <country></country>
+        <admin1></admin1>
+        <admin2></admin2>
+        <admin3></admin3>
+        <locality1></locality1>
+        <locality2></locality2>
+        <postal></postal>
+        <centroid>
+            <latitude>43.084320</latitude>
+            <longitude>-79.070572</longitude>
+        </centroid>
+        <boundingBox>
+            <southWest>
+                <latitude>43.075249</latitude>
+                <longitude>-79.078903</longitude>
+            </southWest>
+            <northEast>
+                <latitude>43.093391</latitude>
+                <longitude>-79.057671</longitude>
+            </northEast>
+        </boundingBox>
+        <areaRank>1</areaRank>
+        <popRank>0</popRank>
+    </place>
+</places>
