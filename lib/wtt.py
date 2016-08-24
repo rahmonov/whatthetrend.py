@@ -5,6 +5,14 @@ import requests
 
 from lib.conf import BASE_API_URL, YAHOO_API_BASE_URI, YAHOO_CLIENT_ID
 
+LOCATION_CODES = {
+    'earth': 19,
+    'country': 12,
+    'region': 8,
+    'state': 8,
+    'town': 7
+}
+
 
 class WhatTheTrend:
     def _get_json(self, url, params=None):
@@ -35,6 +43,17 @@ class WhatTheTrend:
 
         soup = BeautifulSoup(response)
         return soup.woeid.text
+
+    def _get_location_code(self, location):
+        location = location.lower()
+
+        if location in LOCATION_CODES.keys():
+            return LOCATION_CODES[location]
+
+        if 'state' in location or 'region' in location:
+            return LOCATION_CODES['state']
+
+        raise AttributeError("Wrong location type")
 
     def get_trends(self, around=None):
         woeid = None
@@ -80,3 +99,19 @@ class WhatTheTrend:
             'message': 'Something went wrong. Please, try again later',
             'status': response
         })
+
+    def get_trends_by_location(self, location='earth'):
+        location_code = self._get_location_code(location)
+        location_trends_url = '{base}/trends/locations/top.json?place_type_code={code}'.format(
+            base=BASE_API_URL, code=location_code)
+
+        ok, response = self._get_json(location_trends_url)
+
+        if ok:
+            return response['trends']
+
+        return json.dumps({
+            'message': 'Something went wrong. Please, try again later',
+            'status': response
+        })
+

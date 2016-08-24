@@ -66,6 +66,19 @@ class WTTTestCase(unittest.TestCase):
             "{0}/places.q({1})".format(YAHOO_API_BASE_URI, 'niagara falls'),
             {'appid': YAHOO_CLIENT_ID})
 
+    def test_get_location_code(self):
+        country_code = self.wtt._get_location_code('Country')
+        region_code = self.wtt._get_location_code('region')
+        state_code = self.wtt._get_location_code('state')
+        state_region_code = self.wtt._get_location_code('region/state')
+
+        self.assertEqual(country_code, 12)
+        self.assertEqual(region_code, 8)
+        self.assertEqual(state_code, 8)
+        self.assertEqual(state_region_code, 8)
+
+        with self.assertRaises(AttributeError):
+            self.wtt._get_location_code('unknown')
 
 if __name__ == '__main__':
     unittest.main()
