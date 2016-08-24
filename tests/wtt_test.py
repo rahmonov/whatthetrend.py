@@ -40,7 +40,7 @@ class WTTTestCase(unittest.TestCase):
         self.assertEqual(trends[1]['name'], '#traingate')
 
         mock_get.assert_called_with(
-            '{base}/trends.json'.format(base=BASE_API_URL))
+            '{base}/trends.json?woeid=None'.format(base=BASE_API_URL))
 
     @patch('lib.wtt.WhatTheTrend._get_text')
     def test_get_yahoo_woeid_by_name(self, mock_get_text):
