@@ -19,15 +19,27 @@ class WhatTheTrend:
         response = requests.get(url, params=params)
 
         if response.ok:
-            print(requests.get(url, params=params).text)
             return True, requests.get(url, params=params).text
 
         return False, response.status_code
 
+    def _get_woeid_by_name(self, name):
+        places_url = "{0}/places.q({1})".format(YAHOO_API_BASE_URI, name)
+        ok, response = self._get_text(places_url, {'appid': YAHOO_CLIENT_ID})
+
+        if not ok:
+            return json.dumps({
+                'message': 'Something went wrong. Please, try again later',
+                'status': response
+            })
+
+        soup = BeautifulSoup(response)
+        return soup.woeid.text
+
     def get_trends(self, around=None):
         woeid = None
         if around:
-            woeid = self.get_woeid_by_name(around)
+            woeid = self._get_woeid_by_name(around)
 
         trends_url = '{base}/trends.json?woeid={id}'.format(base=BASE_API_URL,
                                                             id=woeid)
@@ -41,17 +53,19 @@ class WhatTheTrend:
              'status': response
         })
 
-    def get_woeid_by_name(self, name):
-        places_url = "{0}/places.q({1})".format(YAHOO_API_BASE_URI, name)
-        ok, response = self._get_text(places_url, {'appid': YAHOO_CLIENT_ID})
+    def get_active_trends(self):
+        active_trends_url = '{base}/trends/active.json'.format(
+            base=BASE_API_URL)
 
-        if not ok:
-            return json.dumps({
-                'message': 'Something went wrong. Please, try again later',
-                'status': response
-            })
+        ok, response = self._get_json(active_trends_url)
 
-        soup = BeautifulSoup(response)
-        return soup.woeid.text
+        if ok:
+            return response['trends']
+
+        return json.dumps({
+            'message': 'Something went wrong. Please, try again later',
+            'status': response
+        })
+
 
 

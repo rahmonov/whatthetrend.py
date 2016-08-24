@@ -52,7 +52,7 @@ class WTTTestCase(unittest.TestCase):
 
         mock_get_text.return_value = (True, opera_house_xml)
 
-        opera_house_woeid = self.wtt.get_woeid_by_name('Sydney Opera House')
+        opera_house_woeid = self.wtt._get_woeid_by_name('Sydney Opera House')
         self.assertEqual(opera_house_woeid, '28717584')
         mock_get_text.assert_called_with(
             "{0}/places.q({1})".format(YAHOO_API_BASE_URI, 'Sydney Opera House'),
@@ -60,7 +60,7 @@ class WTTTestCase(unittest.TestCase):
 
         mock_get_text.return_value = (True, niagara_xml)
 
-        niagara_falls_woeid = self.wtt.get_woeid_by_name('niagara falls')
+        niagara_falls_woeid = self.wtt._get_woeid_by_name('niagara falls')
         self.assertEqual(niagara_falls_woeid, '28299078')
         mock_get_text.assert_called_with(
             "{0}/places.q({1})".format(YAHOO_API_BASE_URI, 'niagara falls'),
