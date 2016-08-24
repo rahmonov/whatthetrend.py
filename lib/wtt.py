@@ -67,5 +67,16 @@ class WhatTheTrend:
             'status': response
         })
 
+    def get_spammy_trends(self):
+        spammy_trends_url = '{base}/trends/active.json'.format(
+            base=BASE_API_URL)
 
+        ok, response = self._get_json(spammy_trends_url)
 
+        if ok:
+            return response['trends']
+
+        return json.dumps({
+            'message': 'Something went wrong. Please, try again later',
+            'status': response
+        })
