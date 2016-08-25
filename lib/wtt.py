@@ -115,3 +115,15 @@ class WhatTheTrend:
             'status': response
         })
 
+    def get_categories(self):
+        categories_url = '{base}/categories.json'.format(base=BASE_API_URL)
+
+        ok, response = self._get_json(categories_url)
+
+        if ok:
+            return response['categories']
+
+        return json.dumps({
+            'message': 'Something went wrong. Please, try again later',
+            'status': response
+        })
