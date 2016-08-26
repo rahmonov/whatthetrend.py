@@ -173,3 +173,22 @@ class WhatTheTrend:
             'status': response
         })
 
+    def extended_search_trend(self, q, count=10):
+        if not q:
+            return list()
+
+        search_url = '{base}/trend/search_extended/json'.format(
+            base=BASE_API_URL_V1)
+
+        ok, response = self._get_json(
+            search_url, params={'q': q, 'count': count})
+
+        if ok:
+            return response['api']['trends']["trend"]
+
+        return json.dumps({
+            'message': 'Something went wrong. Please, try again later',
+            'status': response
+        })
+
+
