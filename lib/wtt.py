@@ -173,5 +173,3 @@ class WhatTheTrend:
             'status': response
         })
 
-wtt = WhatTheTrend()
-print(wtt.search_trend('sex'))
