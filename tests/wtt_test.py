@@ -80,5 +80,15 @@ class WTTTestCase(unittest.TestCase):
         with self.assertRaises(AttributeError):
             self.wtt._get_location_code('unknown')
 
+    @patch('lib.wtt.WhatTheTrend._get_text')
+    def test_seaching_trends_by_text_returns_list(self, mock_get_text):
+        mock_get_text.return_value = True, "friday\nfriday2\nfriday3"
+
+        searched_trends = self.wtt.search_trend('friday')
+
+        self.assertTrue(isinstance(searched_trends, list))
+        self.assertEqual(searched_trends, ['friday', 'friday2', 'friday3'])
+
+
 if __name__ == '__main__':
     unittest.main()

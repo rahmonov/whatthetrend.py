@@ -3,7 +3,8 @@ import json
 from bs4 import BeautifulSoup
 import requests
 
-from lib.conf import BASE_API_URL, YAHOO_API_BASE_URI, YAHOO_CLIENT_ID
+from lib.conf import BASE_API_URL, YAHOO_API_BASE_URI, YAHOO_CLIENT_ID, \
+    BASE_API_URL_V1
 
 LOCATION_CODES = {
     'earth': 19,
@@ -155,3 +156,22 @@ class WhatTheTrend:
             'message': 'Something went wrong. Please, try again later',
             'status': response
         })
+
+    def search_trend(self, q):
+        if not q:
+            return list()
+
+        search_url = '{base}/trend/search'.format(base=BASE_API_URL_V1)
+
+        ok, response = self._get_text(search_url, params={'q': q})
+
+        if ok:
+            return list(map(str.strip, response.split('\n')))
+
+        return json.dumps({
+            'message': 'Something went wrong. Please, try again later',
+            'status': response
+        })
+
+wtt = WhatTheTrend()
+print(wtt.search_trend('sex'))
