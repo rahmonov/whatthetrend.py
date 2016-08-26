@@ -127,3 +127,17 @@ class WhatTheTrend:
             'message': 'Something went wrong. Please, try again later',
             'status': response
         })
+
+    def get_trendy_locations(self):
+        trendy_locations_url = '{base}/locations/current.json'.format(
+            base=BASE_API_URL)
+
+        ok, response = self._get_json(trendy_locations_url)
+
+        if ok:
+            return response['locations']
+
+        return json.dumps({
+            'message': 'Something went wrong. Please, try again later',
+            'status': response
+        })
