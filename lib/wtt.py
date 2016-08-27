@@ -191,4 +191,20 @@ class WhatTheTrend:
             'status': response
         })
 
+    def get_trend_by_id(self, id, versions=-1):
+        if not id:
+            raise ValueError("Provide a valid id.")
+
+        trend_url = '{base}/trend/getById/{id}/json'.format(base=BASE_API_URL_V1,
+                                                            id=id)
+
+        ok, response = self._get_json(trend_url, params={'versions': versions})
+
+        if ok:
+            return response['api']['trend']
+
+        return json.dumps({
+            'message': 'Something went wrong. Please, try again later',
+            'status': response
+        })
 
