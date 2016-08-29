@@ -285,3 +285,24 @@ Whatthetrend.py provides a friendly Python interface to the What The Trend API
      }
     }
 ```
+
+### Responses
+
+If successful:
+
+```python
+{
+  'ok': True,
+  'data': {...}
+}
+```
+
+If error:
+
+```python
+{
+  'ok': False,
+  'message': 'Something went wrong',
+  'status': 401
+}
+```
