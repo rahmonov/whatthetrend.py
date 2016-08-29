@@ -5,6 +5,7 @@ import requests
 
 from lib.conf import BASE_API_URL, YAHOO_API_BASE_URI, YAHOO_CLIENT_ID, \
     BASE_API_URL_V1
+from lib.responses import JSONResponse
 
 LOCATION_CODES = {
     'earth': 19,
@@ -66,12 +67,11 @@ class WhatTheTrend:
         ok, response = self._get_json(trends_url)
 
         if ok:
-            return response['trends']
+            return JSONResponse(ok=ok, data=response['trends'])
 
-        return json.dumps({
-            'message': 'Something went wrong. Please, try again later',
-             'status': response
-        })
+        return JSONResponse(
+            message='Something went wrong. Please, try again later',
+            status=response)
 
     def get_active_trends(self):
         active_trends_url = '{base}/trends/active.json'.format(
@@ -80,12 +80,11 @@ class WhatTheTrend:
         ok, response = self._get_json(active_trends_url)
 
         if ok:
-            return response['trends']
+            return JSONResponse(ok=ok, data=response['trends'])
 
-        return json.dumps({
-            'message': 'Something went wrong. Please, try again later',
-            'status': response
-        })
+        return JSONResponse(
+            message='Something went wrong. Please, try again later',
+            status=response)
 
     def get_spammy_trends(self):
         spammy_trends_url = '{base}/trends/active.json'.format(
@@ -94,12 +93,11 @@ class WhatTheTrend:
         ok, response = self._get_json(spammy_trends_url)
 
         if ok:
-            return response['trends']
+            return JSONResponse(ok=ok, data=response['trends'])
 
-        return json.dumps({
-            'message': 'Something went wrong. Please, try again later',
-            'status': response
-        })
+        return JSONResponse(
+            message='Something went wrong. Please, try again later',
+            status=response)
 
     def get_trends_by_location(self, location='earth'):
         location_code = self._get_location_code(location)
@@ -109,12 +107,11 @@ class WhatTheTrend:
         ok, response = self._get_json(location_trends_url)
 
         if ok:
-            return response['trends']
+            return JSONResponse(ok=ok, data=response['trends'])
 
-        return json.dumps({
-            'message': 'Something went wrong. Please, try again later',
-            'status': response
-        })
+        return JSONResponse(
+            message='Something went wrong. Please, try again later',
+            status=response)
 
     def get_categories(self):
         categories_url = '{base}/categories.json'.format(base=BASE_API_URL)
@@ -122,12 +119,11 @@ class WhatTheTrend:
         ok, response = self._get_json(categories_url)
 
         if ok:
-            return response['categories']
+            return JSONResponse(ok=ok, data=response['categories'])
 
-        return json.dumps({
-            'message': 'Something went wrong. Please, try again later',
-            'status': response
-        })
+        return JSONResponse(
+            message='Something went wrong. Please, try again later',
+            status=response)
 
     def get_trendy_locations(self):
         trendy_locations_url = '{base}/locations/current.json'.format(
@@ -136,12 +132,11 @@ class WhatTheTrend:
         ok, response = self._get_json(trendy_locations_url)
 
         if ok:
-            return response['locations']
+            return JSONResponse(ok=ok, data=response['locations'])
 
-        return json.dumps({
-            'message': 'Something went wrong. Please, try again later',
-            'status': response
-        })
+        return JSONResponse(
+            message='Something went wrong. Please, try again later',
+            status=response)
 
     def get_locations(self):
         all_locations_url = '{base}/locations/all.json'.format(
@@ -150,12 +145,11 @@ class WhatTheTrend:
         ok, response = self._get_json(all_locations_url)
 
         if ok:
-            return response['locations']
+            return JSONResponse(ok=ok, data=response['locations'])
 
-        return json.dumps({
-            'message': 'Something went wrong. Please, try again later',
-            'status': response
-        })
+        return JSONResponse(
+            message='Something went wrong. Please, try again later',
+            status=response)
 
     def search_trend(self, q):
         if not q:
@@ -166,12 +160,12 @@ class WhatTheTrend:
         ok, response = self._get_text(search_url, params={'q': q})
 
         if ok:
-            return list(map(str.strip, response.split('\n')))
+            return JSONResponse(
+                ok=ok, data=list(map(str.strip, response.split('\n'))))
 
-        return json.dumps({
-            'message': 'Something went wrong. Please, try again later',
-            'status': response
-        })
+        return JSONResponse(
+            message='Something went wrong. Please, try again later',
+            status=response)
 
     def extended_search_trend(self, q, count=10):
         if not q:
@@ -184,27 +178,24 @@ class WhatTheTrend:
             search_url, params={'q': q, 'count': count})
 
         if ok:
-            return response['api']['trends']["trend"]
+            return JSONResponse(ok=ok, data=response['api']['trends']["trend"])
 
-        return json.dumps({
-            'message': 'Something went wrong. Please, try again later',
-            'status': response
-        })
+        return JSONResponse(
+            message='Something went wrong. Please, try again later',
+            status=response)
 
     def get_trend_by_id(self, id, versions=-1):
         if not id:
             raise ValueError("Provide a valid id.")
 
-        trend_url = '{base}/trend/getById/{id}/json'.format(base=BASE_API_URL_V1,
-                                                            id=id)
+        trend_url = '{base}/trend/getById/{id}/json'.format(
+            base=BASE_API_URL_V1, id=id)
 
         ok, response = self._get_json(trend_url, params={'versions': versions})
 
         if ok:
-            return response['api']['trend']
+            return JSONResponse(ok=ok, data=response['api']['trend'])
 
-        return json.dumps({
-            'message': 'Something went wrong. Please, try again later',
-            'status': response
-        })
-
+        return JSONResponse(
+            message='Something went wrong. Please, try again later',
+            status=response)
